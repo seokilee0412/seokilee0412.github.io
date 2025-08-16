@@ -1,5 +1,5 @@
 ---
-title: Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval
+title: "Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval"
 author: Seokgi Lee
 date: 2025-08-16
 categories: [Blogging, Paper]
@@ -8,7 +8,7 @@ pin: true
 media_subpath: '/posts/20250816'
 ---
 
-# Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval
+# "Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval"
 
 Google AI Team
 
