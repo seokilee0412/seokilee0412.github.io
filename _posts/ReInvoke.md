@@ -1,0 +1,156 @@
+---
+title: Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval
+author: Seokgi Lee
+date: 2025-08-16
+categories: [Blogging, Paper]
+tags: [LLM Agent]
+pin: true
+media_subpath: '/posts/20250816'
+---
+
+# Re-Invoke: Tool Invocation Rewriting for Zero-Shot Tool Retrieval
+
+Google AI Team
+
+## 문제 정의
+
+![image.png](/assets/img/ReInvoke/image.png)
+
+LLM은 다양한 API와 도구를 호출하며 외부 기능을 활용하지만, **툴셋이 커질수록 적절한 툴을 고르는 것이 어렵고 성능 저하**가 발생하고 그에 대한 이유:
+
+1. **토큰 길이 제한** – 수천 개의 툴을 프롬프트에 모두 포함 불가능.
+2. **변화하는 툴셋** – 툴이 자주 업데이트되어 레이블 유지가 어렵고 관리가 비효율적.
+3. **모호한 사용자 질의** – 진짜 의도를 파악하지 못하면 잘못된 툴 호출 가능 (예: 여행 목적이 언어 학습임에도 여행툴 선택).
+
+---
+
+## Re-Invoke
+
+![image.png](/assets/img/ReInvoke/image1.png)
+
+**Re-Invoke는 두 개의 주요 컴포넌트와 이에 대한 결과를 활용하는 랭킹 알고리즘으로 구성:**
+
+### 1. **Query Generator (쿼리 생성기)**
+
+**목적:** 툴 문서 하나당 다양한 예시 사용자 쿼리를 생성하여 툴 문서를 "확장"하고 검색 정확도 향상.
+
+### 왜 필요한가?
+
+- 대부분의 툴 문서(Documentation)는 짧거나 간단해서 LLM 임베딩이 이해하기 어려움.
+- 예시 질의 없이 툴의 용도를 추론하기 어렵기 때문에 **질의 기반 문서 확장(document expansion)**이 필요.
+
+### 🛠️ 작동 방식:
+
+- 툴 문서를 LLM에게 입력
+- “이 API를 사용할 수 있는 사용자의 요청을 예측해보세요”라는 프롬프트 제공
+- 예시 쿼리 생성: "Book me a round-trip to Paris next weekend in economy class"
+- 생성된 쿼리들을 툴 문서에 덧붙임 → 여러 개의 “확장된 툴 문서” 생성됨
+
+### 튜닝 옵션:
+
+- **샘플 수:** 보통 10개 쿼리 생성이 가장 성능 좋음
+- **조합 방식:** 툴 문서에 쿼리를 append 방식이 가장 좋음
+- **유사도 계산 방식:** 평균(mean)이 max보다 안정적임
+
+---
+
+### 2. **Intent Extractor (의도 추출기)**
+
+**목적:** 사용자 질의에서 **진짜로 요청하는 행동(action)을 추출**해 툴 검색을 정확히 만듦
+
+### 왜 필요한가?
+
+- 사용자 질의는 종종 verbose, 혼합된 배경 정보 포함
+    - 예: "I’m traveling to San Francisco this weekend, can you help me book a flight and find restaurants?"
+- 단순 텍스트 매칭으로는 'flight'과 'restaurant' 두 요청을 제대로 구분하지 못함
+
+### 작동 방식:
+
+- LLM에게 사용자의 질의를 입력
+- 프롬프트를 통해 “이 사용자 요청에서 명확한 행동들을 추출하라”고 지시
+- 결과:
+    - intent 1: book a flight to SF
+    - intent 2: find highly rated restaurants in SF
+
+### 장점:
+
+- 다중 의도도 처리 가능 (multi-tool 검색)
+- 불필요한 문맥을 제거하고 **실행 가능한 요청만 추출**
+
+---
+
+### 3. **Multi-view Similarity Ranking**
+
+![image.png](/assets/img/ReInvoke/image2.png)
+
+**목적:** 여러 의도(intent)에 대해 각각 최적의 툴을 찾고, 최종적으로 가장 적합한 툴을 순위화
+
+### 작동 방식:
+
+- 각 intent ↔ 확장된 툴 문서 간 cosine similarity 계산
+- 각 intent마다 상위 툴들을 계산한 뒤
+- **유사도 + 의도별 순위**를 조합해 최종 정렬
+- 이 과정이 “multi-view ranking”
+
+### Multi-View Ranking
+
+1. **Tool Document 확장:**
+    - 각 툴 문서는 𝑚개의 synthetic query로 확장되어 𝑚개의 임베딩 생성됨 → 평균을 내어 툴 벡터 𝐸_d 생성
+2. **Intent별 임베딩 생성:**
+    - 사용자 질의에서 추출한 intent 𝑞₁, 𝑞₂, ..., 𝑞ₙ을 각각 임베딩
+3. **각 intent에 대해 모든 툴과의 유사도 계산:**
+    - sim(𝑞ᵢ, 𝐸_d) = cosine similarity
+4. **각 intent 내에서 툴들을 유사도 기준으로 정렬:**
+    - intent별로 툴들에 **reversed rank** 할당 (예: 유사도 높은 툴 = 낮은 순위 수치)
+5. **툴별 종합 점수 계산:**
+    - 각 툴 문서 d는 intent 중 **가장 높은 rank+score tuple**을 가짐(약간 MaxSim 느낌쓰…)
+        
+        r(Q, d) = max_i (rank(qᵢ, d), sim(qᵢ, d))
+        
+6. **최종적으로 top-K 툴 선택**
+
+---
+
+## 성능 실험 요약
+
+### 벤치마크 데이터셋
+
+- ToolBench (I1, I2, I3)
+- ToolE (Single-tool / Multi-tool)
+
+### 평가 지표
+
+- **nDCG@5**: 상위 5개 툴 중 올바른 툴의 순위 기반 평가지표.
+- **Recall@k**: k개 툴 내 올바른 툴 포함 여부.
+- **Pass Rate**: 실제 작업 성공률 (end-to-end)
+
+### 실험 결과
+
+![image.png](/assets/img/ReInvoke/image3.png)
+
+- **20%↑ 성능 향상 (single-tool)**
+- **39%↑ 성능 향상 (multi-tool)**
+- 기존 sparse (BM25), dense (HyDE, Vertex AI Embedding) 방식보다 우수
+- 다양한 LLM (GPT-3.5, Mistral-7B) 기반에서도 일관된 효과
+
+---
+
+## Ablation Study
+
+![image.png](/assets/img/ReInvoke/image4.png)
+
+- **Query Generator** 단독 → 간단한 툴 문서에서 매우 효과적
+- **Intent Extractor** 단독 → 긴 문맥, 다중 의도 질의에 효과적
+- **둘 다 결합** → 최상의 성능
+
+추가 실험:
+
+- 쿼리만 쓰는 것보다 툴 문서와 결합해 사용하는 것이 더 효과적
+- 생성 쿼리 수가 많을수록 성능 향상 (최적값: 10개)
+
+---
+
+## 한계 및 향후 방향
+
+- **Synthetic query 품질 개선 필요** – 현재는 무작위 생성, 향후 정교한 제어 프롬프트나 외부 지식 활용 고려
+- **의도 추출 개선 가능성** – downstream 결과를 활용한 self-correction 루프 제안
