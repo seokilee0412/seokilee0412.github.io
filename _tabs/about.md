@@ -4,5 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+이름 : 이석기  
+이메일 : seokilee@snu.ac.kr  
+관심 도메인 : LLM, Agent  
