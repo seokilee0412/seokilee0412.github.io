@@ -123,4 +123,8 @@
   {% endif %}
 
   {% include metadata-hook.html %}
+
+  {% if page.math %}
+  {% include mathjax_support.html %}
+  {% endif %}
 </head>
