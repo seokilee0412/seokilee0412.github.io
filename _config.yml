@@ -1,6 +1,6 @@
 # The Site Configuration
 
- # Conversion
+# Conversion
 markdown: kramdown
 highlighter: rouge
 lsi: false
