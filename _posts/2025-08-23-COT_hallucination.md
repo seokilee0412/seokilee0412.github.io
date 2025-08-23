@@ -105,7 +105,7 @@ CoT prompting은 LLM의 추론력을 향상시키고 할루시네이션 빈도�
         - 모델의 응답을 claim으로 보고,
         - 여러 증거 문장들과 Natural Language Inference (NLI)를 수행
             - NLI란?
-                - 주어진 두 문장(전제 Premise와 가설 Hypothesis) 사이의 관계를 아래 세 가지 중 하나로 분류하는 과제입니다:
+                - 주어진 두 문장(전제 Premise와 가설 Hypothesis) 사이의 관계를 아래 세 가지 중 하나로 분류하는 과제:
             - Entail / Neutral / Contradict 판별
             
             | 관계 | 설명 | 예시 |
