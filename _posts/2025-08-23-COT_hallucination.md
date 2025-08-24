@@ -3,7 +3,7 @@ title: "Chain-of-Thought Prompting Obscures Hallucination Cues in Large Language
 author: seokgi
 date: 2025-08-23
 categories: [Paper]
-tags: [LLM]
+tags: [LLM, haullcination]
 pin: true
 math: true
 ---
