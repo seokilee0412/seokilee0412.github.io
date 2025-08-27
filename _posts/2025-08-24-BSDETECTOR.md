@@ -137,19 +137,19 @@ $$
 
 ## 실험
 
-### 5.1 데이터셋
+### 데이터셋
 
 - GSM8K (수학 단어문제)
 - SVAMP (수학 문제 변형)
 - CSQA (Commonsense QA)
 - TriviaQA
 
-### 5.2 실험 모델
+### 실험 모델
 
 - OpenAI Text-Davinci-003
 - GPT-3.5 Turbo
 
-### 5.3 주요 결과
+### 주요 결과
 
 - **AUROC (Uncertainty Quality 평가)**
     
