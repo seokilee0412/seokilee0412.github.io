@@ -6,4 +6,4 @@ order: 4
 
 이름 : 이석기  
 이메일 : seokilee@snu.ac.kr  
-관심 도메인 : LLM, text-to-image retrieval  
+관심 도메인 : LLM, retrieval/search
