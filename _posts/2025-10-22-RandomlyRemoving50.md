@@ -155,9 +155,10 @@ Written By. Sotaro Takeshita, Yurina Takeshita, Daniel Ruffinelli, Simone Paolo 
                     - **Corr Mean이 낮다:**
                         - 차원들이 독립적으로 정보 표현 → 더 효율적 사용
             - 수학적 정의
-            1. 임베딩 행렬 $Z \in \mathbb{R}^{N \times d}$ 의 각 차원을 정규화
-            2. Pearson 상관계수를 $\rho_{i,j} = \frac{\text{Cov}(Z_i, Z_j)}{\sigma_{Z_i} \sigma_{Z_j}}$ 차원 간 쌍으로 계산
-            3. 전체 상관계수 평균을 구함: $\text{Corr Mean} = \frac{1}{d(d-1)} \sum_{i \neq j} |{\rho_{i,j}}|$
+            1.임베딩 행렬 $Z \in \mathbb{R}^{N \times d}$ 의 각 차원을 정규화
+            2.Pearson 상관계수를 차원 간 쌍으로 계산: $\rho_{i,j} = \frac{\text{Cov}(Z_i, Z_j)}{\sigma_{Z_i} \sigma_{Z_j}}$
+            3.전체 상관계수 평균을 구함: $\text{Corr Mean} = \frac{1}{d(d-1)} \sum_{i \neq j} |{\rho_{i,j}}|$
+
     - **결과**
         - 학습 진행되면서 Corr Mean은 감소 → 차원 붕괴 완화
         - 그러나 50% 차원 제거 후 **성능 유지 비율은 변화 없음**
