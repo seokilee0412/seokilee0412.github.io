@@ -110,9 +110,12 @@ Written By. Sotaro Takeshita, Yurina Takeshita, Daniel Ruffinelli, Simone Paolo 
                     - 임베딩 벡터들의 L2 정규화된 집합을 ${z_i}_{i=1}^N$라 할 때,
                     - 식:
 
-                    $$\mathcal{L}_{uniform} = \log \mathbb{E}_{i \neq j} \left[ e^{-2 \| z_i - z_j \|^2} \right]$$
-                        - $\|z_i - z_j \|^2$: 임베딩 간 유클리드 거리 제곱
-                        - $e^{-2 \| z_i - z_j \|^2}$: 서로 가까울수록 큰 값 (즉, 군집화 정도)
+                    $$
+                    \mathcal{L}_{uniform} = \log \mathbb{E}_{i \neq j} \left[ e^{-2 \| z_i - z_j \|^2} \right]
+                    $$
+                    
+                    - $\|z_i - z_j \|^2$: 임베딩 간 유클리드 거리 제곱
+                    - $e^{-2 \| z_i - z_j \|^2}$: 서로 가까울수록 큰 값 (즉, 군집화 정도)
             - **IsoScore** (↑일수록 고르게 분포)
                 - 개념적 정의
                     - 임베딩 공간이 **모든 방향에 걸쳐 고르게 분산되어 있는지**를 측정.
