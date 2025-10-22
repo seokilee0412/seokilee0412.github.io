@@ -108,7 +108,10 @@ Written By. Sotaro Takeshita, Yurina Takeshita, Daniel Ruffinelli, Simone Paolo 
                     - 값이 **클수록 특정 방향에 몰려 있음 (anisotropic)**
                 - 수학적 정의
                     - 임베딩 벡터들의 L2 정규화된 집합을 ${z_i}_{i=1}^N$라 할 때,
-                    - $\mathcal{L}_{uniform} = \log \mathbb{E}_{i \neq j} \left[ e^{-2 \| z_i - z_j \|^2} \right]$
+                    - 식:
+
+                    $$\mathcal{L}_{uniform} = \log \mathbb{E}_{i \neq j} \left[ e^{-2 \| z_i - z_j \|^2} \right]$$
+
                         - $\|z_i - z_j \|^2$: 임베딩 간 유클리드 거리 제곱
                         - $e^{-2 \| z_i - z_j \|^2}$: 서로 가까울수록 큰 값 (즉, 군집화 정도)
             - **IsoScore** (↑일수록 고르게 분포)
@@ -150,7 +153,7 @@ Written By. Sotaro Takeshita, Yurina Takeshita, Daniel Ruffinelli, Simone Paolo 
                     - **Corr Mean이 낮다:**
                         - 차원들이 독립적으로 정보 표현 → 더 효율적 사용
             - 수학적 정의
-            1. 임베딩 행렬 $Z \in \mathbb{R}^{N \times d}$의 각 차원을 정규화
+            1. 임베딩 행렬 $Z \in \mathbb{R}^{N \times d}$ 의 각 차원을 정규화
             2. Pearson 상관계수를 차원 간 쌍으로 계산: $\rho_{i,j} = \frac{\text{Cov}(Z_i, Z_j)}{\sigma_{Z_i} \sigma_{Z_j}}$
             3. 전체 상관계수 평균을 구함: $\text{Corr Mean} = \frac{1}{d(d-1)} \sum_{i \neq j} |\rho_{i,j}|$
     - **결과**
