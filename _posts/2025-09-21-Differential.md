@@ -3,7 +3,7 @@ title: "Differential-informed Sample Selection Accelerates Multimodal Contrastiv
 author: seokgi
 date: 2025-09-21
 categories: [Paper]
-tags: [LLM, text-image matching]
+tags: [LLM, text-image retrieval]
 pin: true
 math: true
 ---

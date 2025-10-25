@@ -7,7 +7,7 @@ tags: [LLM, retrieval]
 pin: true
 math: true
 ---
-EMNLP Oral
+2025 EMNLP Oral
 Written By. Sotaro Takeshita, Yurina Takeshita, Daniel Ruffinelli, Simone Paolo Ponzetto
 
 ## 1. 연구 개요
