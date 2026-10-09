@@ -1,0 +1,80 @@
+# 주제(Topic) 분류
+#
+# 홈 화면의 주제 필터, 카드의 주제 표시, TOPICS 탭(타임라인·목차), 포스트 상단 주제 표시에 사용됩니다.
+# 기존 글은 아래 `posts` 목록(파일명에서 날짜를 뺀 slug)으로 연결합니다.
+# 새 글은 front matter에 `topic: <id>` 한 줄만 넣어도 됩니다. (예: topic: safety)
+#
+# 필드
+#   id     : 고유 키 (URL 앵커로도 사용: /topics/#<id>)
+#   name   : 화면에 보이는 이름
+#   desc   : 주제 설명 한 줄
+#   posts  : 이 주제에 속하는 기존 글 slug 목록
+
+- id: text-embedding
+  name: 텍스트 임베딩 · 검색
+  desc: 텍스트 임베딩 모델, Dense Retrieval, Hard Negative, 임베딩 벤치마크
+  posts:
+    - SyNeg
+    - Fixing
+    - Negative
+    - Conan2
+    - Boosting
+    - BetterTextEmbedders
+    - RandomlyRemoving50
+    - ImprovingDocumentRetrievalCoherence
+    - FinMTEB
+
+- id: mm-embedding
+  name: 멀티모달 임베딩 · 검색
+  desc: 이미지-텍스트 검색, MLLM 기반 임베딩, Matryoshka 표현 학습
+  posts:
+    - Aligning
+    - Differential
+    - FLAME
+    - SMEC
+    - CLIP-MoE
+    - MAPLE
+    - BeyondMRL
+    - MetaEmbed
+    - U-MARVEL
+    - RzenEmbed
+
+- id: rag
+  name: RAG
+  desc: 검색 증강 생성, GraphRAG, 온톨로지 기반 RAG
+  posts:
+    - OG-RAG
+    - GraphRAG
+
+- id: training
+  name: LLM 학습 · 효율화
+  desc: SFT · PEFT · CPT 등 LLM 학습 방법과 효율적 추론
+  posts:
+    - SCAR
+    - FinLoRA
+    - SoftCoT
+    - AnalyzingtheEffectsof
+    - LoSiA
+    - MokA
+    - FinCPT1
+
+- id: reliability
+  name: 신뢰성 · 평가
+  desc: 환각 탐지, 불확실성 추정, LLM-as-a-Judge 평가
+  posts:
+    - COT_hallucination
+    - BSDETECTOR
+    - CollabEval
+    - MJ_EVAL
+
+- id: agent
+  name: LLM 에이전트
+  desc: 도구 검색 · 도구 계획 등 LLM 에이전트
+  posts:
+    - ReInvoke
+    - Smurfs
+
+- id: safety
+  name: 가드레일 · 안전
+  desc: LLM 가드레일, 안전성 분류, 안전 정렬
+  posts: []

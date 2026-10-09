@@ -16,6 +16,10 @@ script_includes:
 
 <article class="px-1" data-toc="{{ enable_toc }}">
   <header>
+    {% include topic-of.html post=page %}
+    {% if topic %}
+      <a class="topic-label post-topic" href="{{ '/topics/' | relative_url }}#{{ topic.id }}">{{ topic.name }}</a>
+    {% endif %}
     <h1 data-toc-skip>{{ page.title }}</h1>
     {% if page.description %}
       <p class="post-desc fw-light mb-4">{{ page.description }}</p>

@@ -1,0 +1,18 @@
+{%- comment -%}
+  주어진 포스트의 주제를 찾아 `topic` 변수에 담습니다. (없으면 nil)
+  우선순위: front matter `topic` > _data/topics.yml 의 posts 목록
+  사용법: {% include topic-of.html post=post %}
+{%- endcomment -%}
+{%- assign topic = nil -%}
+{%- assign _topic_id = include.post.topic -%}
+{%- for _t in site.data.topics -%}
+  {%- if _topic_id -%}
+    {%- if _t.id == _topic_id -%}
+      {%- assign topic = _t -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- elsif _t.posts contains include.post.slug -%}
+    {%- assign topic = _t -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}

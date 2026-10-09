@@ -1,0 +1,570 @@
+/*
+ * 사이트 커스텀 스타일
+ *  - 본문 가독성 (한글 줄바꿈, 줄간격, 제목 위계, 목록, 표)
+ *  - 주제(Topic) 필터 · 배지 · TOPICS 탭
+ * 글(_posts) 내용은 건드리지 않고 표시 방식만 바꿉니다.
+ */
+
+@use 'abstracts/breakpoints' as bp;
+
+/* 테마 변수에서 파생한 보조 색 (라이트/다크 자동 대응) */
+:root {
+  --rule-color: color-mix(in srgb, var(--text-color) 16%, transparent);
+  --rule-soft-color: color-mix(in srgb, var(--text-color) 9%, transparent);
+  --accent-color: var(--link-color);
+  --chip-bg: color-mix(in srgb, var(--text-color) 6%, transparent);
+  --chip-bg-strong: color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+/* ========================================================
+ * 1. 본문 가독성
+ * ====================================================== */
+
+.content {
+  word-break: keep-all; /* 한글을 단어 단위로 줄바꿈 */
+  line-height: 1.85;
+  letter-spacing: -0.005em;
+
+  p {
+    margin-bottom: 1.1rem;
+  }
+
+  /* 글 첫 줄의 "Written by. …" 저자 표기 */
+  > p.byline {
+    color: var(--text-muted-color);
+    font-size: 0.92em;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--rule-soft-color);
+  }
+
+  strong {
+    font-weight: 700;
+    color: var(--heading-color);
+  }
+
+  /* ---------- 제목 위계 ---------- */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.45;
+    scroll-margin-top: 4.5rem;
+  }
+
+  > h1 {
+    font-size: 1.7rem;
+    margin: 3.5rem 0 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--rule-color);
+  }
+
+  > h2 {
+    font-size: 1.5rem;
+    margin: 3.25rem 0 1.1rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--rule-color);
+  }
+
+  > h3 {
+    font-size: 1.28rem;
+    margin: 2.4rem 0 0.9rem;
+  }
+
+  /* h1/h2 없이 h3부터 시작하는 글: h3를 큰 섹션으로 */
+  &:not(:has(> h1, > h2)) > h3 {
+    font-size: 1.45rem;
+    margin-top: 3.25rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--rule-color);
+  }
+
+  > h4 {
+    font-size: 1.15rem;
+    margin: 2.2rem 0 0.8rem;
+  }
+
+  /* ①②③ 로 시작하는 단계 소제목 (site-enhance.js 가 class 부여) */
+  > h4.step-heading,
+  > h5.step-heading {
+    font-size: 1.04rem;
+    margin: 1.6rem 0 0.6rem;
+    color: var(--heading-color);
+  }
+
+  /* 제목 앞 번호(1. / A. / ①)는 본문보다 옅게 — site-enhance.js 가 span 으로 감쌈 */
+  .hd-mark {
+    color: var(--text-muted-color);
+    font-weight: 500;
+    margin-right: 0.4em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  > h5 {
+    font-size: 1rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  /* 섹션 첫 제목은 위 여백을 줄임 */
+  > :is(h1, h2, h3, h4):first-child,
+  > p.byline + :is(h1, h2, h3, h4) {
+    margin-top: 1.5rem;
+  }
+
+  /* ---------- 목록 ---------- */
+  ol,
+  ul {
+    &:not([class]) {
+      > li {
+        margin: 0.4rem 0;
+      }
+
+      /* 중첩 목록: 왼쪽 안내선 + 살짝 작게 */
+      li > ul,
+      li > ol {
+        margin: 0.35rem 0 0.6rem;
+        border-left: 1px solid var(--rule-soft-color);
+        font-size: 0.97em;
+
+        > li {
+          margin: 0.25rem 0;
+        }
+      }
+    }
+  }
+
+  /* 목록 바로 아래 문단과의 간격 */
+  ul + p,
+  ol + p {
+    margin-top: 1rem;
+  }
+
+  /* ---------- 표 ---------- */
+  .table-wrapper > table {
+    font-size: 0.93em;
+    line-height: 1.6;
+    word-break: keep-all;
+
+    thead th {
+      background: var(--chip-bg);
+      font-weight: 700;
+      color: var(--heading-color);
+    }
+
+    th,
+    td {
+      padding: 0.5rem 0.85rem;
+    }
+  }
+
+  /* ---------- 인용 ---------- */
+  > blockquote:not([class]) {
+    border-left-color: var(--accent-color);
+    background: var(--chip-bg);
+    padding: 0.6rem 1rem;
+    border-radius: 0 0.4rem 0.4rem 0;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /* ---------- 수식: 넘칠 때 가로 스크롤 ---------- */
+  mjx-container[display='true'] {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.25rem 0;
+  }
+}
+
+/* 포스트 제목 */
+article header h1 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+/* ========================================================
+ * 2. 주제 표시 (홈 카드 · 포스트 상단) — 글자만, 장식 없이
+ * ====================================================== */
+
+.topic-label {
+  display: block;
+  width: fit-content;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-muted-color);
+}
+
+a.post-topic {
+  margin-top: 2rem;
+  text-decoration: none;
+  border-bottom: 0;
+
+  @include bp.lg {
+    margin-top: 3rem;
+  }
+
+  &:hover {
+    color: var(--link-color);
+    text-decoration: none;
+  }
+
+  + h1 {
+    margin-top: 0.4rem !important;
+  }
+}
+
+/* ========================================================
+ * 3. 홈: 주제 필터 (글자 목록) + 카드
+ * ====================================================== */
+
+.topic-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin-top: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule-color);
+
+  @include bp.lg {
+    margin-top: 2.5rem;
+  }
+
+  @include bp.lt(bp.get(md)) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 0 1rem 0.6rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  + #post-list {
+    margin-top: 1.5rem;
+  }
+}
+
+.topic-chip {
+  flex: 0 0 auto;
+  padding: 0.15rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--text-muted-color);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--heading-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--link-color);
+    outline-offset: 2px;
+  }
+
+  &.active {
+    color: var(--heading-color);
+    font-weight: 700;
+    border-bottom-color: var(--heading-color);
+  }
+}
+
+.topic-chip-count {
+  margin-left: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted-color);
+  font-variant-numeric: tabular-nums;
+}
+
+#post-list {
+  .card-wrapper.topic-hidden {
+    display: none !important;
+  }
+
+  .card .card-body {
+    .topic-label {
+      margin-bottom: 0.1rem;
+    }
+
+    .card-title {
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+    }
+  }
+
+  .card-text.content {
+    word-break: keep-all;
+  }
+}
+
+.card-tags {
+  .card-tag + .card-tag::before {
+    content: ',';
+    margin-right: 0.3rem;
+  }
+}
+
+/* ========================================================
+ * 4. TOPICS 탭: 타임라인 + 접이식 목차
+ * ====================================================== */
+
+main #topics-page {
+  word-break: keep-all;
+
+  .topics-lead {
+    color: var(--text-muted-color);
+    font-size: 0.95rem;
+    margin: -1rem 0 2rem;
+  }
+
+  /* ---------- 타임라인 (주제 × 월) ---------- */
+  .tl-scroll {
+    overflow-x: auto;
+  }
+
+  .tl {
+    min-width: 620px;
+  }
+
+  @include bp.lt(bp.get(md)) {
+    .tl-label {
+      font-size: 0.8rem !important;
+    }
+  }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 9.5rem repeat(var(--months), minmax(0, 1fr));
+    align-items: center;
+
+    @include bp.lt(bp.get(md)) {
+      grid-template-columns: 7.25rem repeat(var(--months), minmax(0, 1fr));
+    }
+  }
+
+  .tl-head {
+    font-size: 0.72rem;
+    line-height: 1.35;
+    color: var(--text-muted-color);
+    text-align: center;
+    padding-bottom: 0.4rem;
+
+    b {
+      color: var(--heading-color);
+      font-weight: 600;
+    }
+  }
+
+  .tl-body .tl-row {
+    border-top: 1px solid var(--rule-soft-color);
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: 1px solid var(--rule-soft-color);
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: var(--chip-bg);
+      outline: none;
+    }
+
+    &.on {
+      background: var(--chip-bg);
+
+      .tl-label {
+        color: var(--link-color);
+        font-weight: 700;
+      }
+
+      .tl-dot {
+        background: var(--link-color);
+      }
+    }
+  }
+
+  /* 가로 스크롤 시 주제 이름은 고정 */
+  .tl-row > :first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    background: var(--main-bg);
+  }
+
+  .tl-body .tl-row:is(:hover, :focus-visible, .on) > :first-child {
+    background: linear-gradient(var(--chip-bg), var(--chip-bg)), var(--main-bg);
+  }
+
+  .tl-label {
+    font-size: 0.88rem;
+    padding: 0.5rem 0.6rem 0.5rem 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--text-color);
+  }
+
+  .tl-cell {
+    min-height: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 4px 2px;
+
+    &.year {
+      border-left: 1px solid var(--rule-color);
+    }
+  }
+
+  .tl-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--heading-color);
+  }
+
+  .tl-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin: 0.6rem 0 2.75rem;
+  }
+
+  /* ---------- 접이식 목차 ---------- */
+  .toc-groups {
+    border-top: 2px solid var(--heading-color);
+  }
+
+  details.toc-group {
+    border-bottom: 1px solid var(--rule-color);
+    scroll-margin-top: 4.5rem;
+
+    > summary {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      padding: 0.85rem 0;
+      list-style: none;
+      cursor: pointer;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--heading-color);
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      /* 펼침 표시 */
+      &::before {
+        content: '';
+        flex: 0 0 auto;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-right: 1.5px solid currentColor;
+        border-bottom: 1.5px solid currentColor;
+        transform: translateY(-0.15rem) rotate(-45deg);
+        transition: transform 0.15s;
+      }
+
+      &:hover {
+        color: var(--link-color);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--link-color);
+        outline-offset: 2px;
+      }
+    }
+
+    &[open] > summary::before {
+      transform: translateY(-0.3rem) rotate(45deg);
+    }
+  }
+
+  .toc-desc {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--text-muted-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include bp.lt(bp.get(md)) {
+      display: none;
+    }
+  }
+
+  .toc-count {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-muted-color);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ul.toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 1rem 1.2rem;
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0.3rem 0;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    a {
+      flex: 0 1 auto;
+      min-width: 0;
+      color: var(--text-color);
+      border-bottom: 0;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--link-color);
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .toc-leader {
+    flex: 1 1 1.5rem;
+    min-width: 1rem;
+    border-bottom: 1px dotted var(--text-muted-color);
+    opacity: 0.6;
+    transform: translateY(-0.3rem);
+  }
+
+  .toc-date {
+    flex: 0 0 auto;
+    font-size: 0.82rem;
+    color: var(--text-muted-color);
+    font-variant-numeric: tabular-nums;
+  }
+}

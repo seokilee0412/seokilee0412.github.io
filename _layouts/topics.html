@@ -1,0 +1,101 @@
+---
+layout: page
+# 주제별 포스트: 위 타임라인(주제 × 월) + 아래 접이식 목차
+# 주제 정의와 기존 글 분류는 _data/topics.yml
+---
+
+{% include lang.html %}
+
+<div id="topics-page">
+  <p class="topics-lead">{{ site.posts | size }}편의 논문 리뷰를 읽은 시기와 주제별로 모았습니다.</p>
+
+  <!-- 타임라인: site-enhance.js 가 아래 데이터로 그립니다 -->
+  <div id="topic-timeline" aria-label="주제별 읽은 시기"></div>
+
+  <script type="application/json" id="topic-timeline-data">
+    {
+      "topics": [
+        {%- assign _first = true -%}
+        {%- for t in site.data.topics -%}
+          {%- assign t_count = 0 -%}
+          {%- for post in site.posts -%}
+            {%- include topic-of.html post=post -%}
+            {%- if topic and topic.id == t.id -%}{%- assign t_count = t_count | plus: 1 -%}{%- endif -%}
+          {%- endfor -%}
+          {%- if t_count > 0 -%}
+            {%- unless _first -%},{%- endunless -%}
+            {"id": {{ t.id | jsonify }}, "name": {{ t.name | jsonify }}}
+            {%- assign _first = false -%}
+          {%- endif -%}
+        {%- endfor -%}
+      ],
+      "posts": [
+        {%- for post in site.posts -%}
+          {%- include topic-of.html post=post -%}
+          {
+            "title": {{ post.title | split: ':' | first | strip | jsonify }},
+            "date": {{ post.date | date: '%Y-%m-%d' | jsonify }},
+            "url": {{ post.url | relative_url | jsonify }},
+            "topic": {% if topic %}{{ topic.id | jsonify }}{% else %}null{% endif %}
+          }
+          {%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+
+  <!-- 접이식 목차 -->
+  <div class="toc-groups">
+    {% for t in site.data.topics %}
+      {% assign t_posts = '' | split: '' %}
+      {% for post in site.posts %}
+        {% include topic-of.html post=post %}
+        {% if topic and topic.id == t.id %}{% assign t_posts = t_posts | push: post %}{% endif %}
+      {% endfor %}
+
+      {% if t_posts.size > 0 %}
+        <details class="toc-group" id="{{ t.id }}">
+          <summary>
+            <span class="toc-name">{{ t.name }}</span>
+            <span class="toc-desc">{{ t.desc }}</span>
+            <span class="toc-count">{{ t_posts.size }}편</span>
+          </summary>
+          <ul class="toc-list">
+            {% for post in t_posts %}
+              <li>
+                <a href="{{ post.url | relative_url }}" title="{{ post.title | escape }}">
+                  {{- post.title | split: ':' | first | strip -}}
+                </a>
+                <span class="toc-leader" aria-hidden="true"></span>
+                <time class="toc-date">{{ post.date | date: '%y.%m.%d' }}</time>
+              </li>
+            {% endfor %}
+          </ul>
+        </details>
+      {% endif %}
+    {% endfor %}
+
+    {% assign etc_posts = '' | split: '' %}
+    {% for post in site.posts %}
+      {% include topic-of.html post=post %}
+      {% unless topic %}{% assign etc_posts = etc_posts | push: post %}{% endunless %}
+    {% endfor %}
+    {% if etc_posts.size > 0 %}
+      <details class="toc-group" id="etc">
+        <summary>
+          <span class="toc-name">기타</span>
+          <span class="toc-count">{{ etc_posts.size }}편</span>
+        </summary>
+        <ul class="toc-list">
+          {% for post in etc_posts %}
+            <li>
+              <a href="{{ post.url | relative_url }}">{{ post.title | split: ':' | first | strip }}</a>
+              <span class="toc-leader" aria-hidden="true"></span>
+              <time class="toc-date">{{ post.date | date: '%y.%m.%d' }}</time>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+    {% endif %}
+  </div>
+</div>
