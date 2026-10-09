@@ -4,10 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-{% assign posts_sorted = site.posts | sort: 'date' %}
-{% assign first_post = posts_sorted | first %}
-{% assign last_post = posts_sorted | last %}
-
 <div id="about-page">
   <p class="about-lead">LLM과 retrieval/search 분야 논문을 읽고 정리하는 기록용 블로그입니다.</p>
 
@@ -23,11 +19,7 @@ order: 4
   </dl>
 
   <h2 class="about-head">이 블로그에서는</h2>
-  <p class="about-text">
-    {{ first_post.date | date: '%Y년 %-m월' }}부터 {{ last_post.date | date: '%Y년 %-m월' }}까지
-    논문 리뷰 {{ site.posts | size }}편을 정리했습니다.
-    리뷰는 대체로 <b>문제 정의 → 해결 방법 → 실험 → 결론</b> 순서로 씁니다.
-  </p>
+  <p class="about-text">2025년 8월부터 시간 날때마다 틈틈히 논문 리뷰를 진행하고 있습니다.</p>
 
   <ul class="about-topics">
     {% for t in site.data.topics %}
