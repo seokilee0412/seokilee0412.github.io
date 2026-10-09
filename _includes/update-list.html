@@ -24,14 +24,15 @@
 
 {% if update_list.size > 0 %}
   <section id="access-lastmod">
-    <h2 class="panel-heading">{{- site.data.locales[include.lang].panel.lastmod -}}</h2>
-    <ul class="content list-unstyled ps-0 pb-1 ms-1 mt-2">
+    <h2 class="panel-heading">최근 업데이트</h2>
+    <ul class="panel-list">
       {% for item in update_list %}
         {% assign index = item | split: '::' | last | plus: 0 %}
         {% assign post = site.posts[index] %}
-        {% assign url = post.url | relative_url %}
-        <li class="text-truncate lh-lg">
-          <a href="{{ url }}">{{ post.title }}</a>
+        <li>
+          <a href="{{ post.url | relative_url }}" title="{{ post.title | escape }}">{{ post.title | split: ':' | first | strip }}</a>
+          <span class="panel-leader" aria-hidden="true"></span>
+          <time class="panel-meta">{{ post.date | date: '%y.%m' }}</time>
         </li>
       {% endfor %}
     </ul>

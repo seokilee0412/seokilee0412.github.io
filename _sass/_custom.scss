@@ -844,3 +844,85 @@ main #about-page {
     }
   }
 }
+
+/* ========================================================
+ * 7. 오른쪽 패널 (최근 리뷰 · 많이 쓴 태그)
+ * ====================================================== */
+
+#panel-wrapper .access {
+  > section {
+    border-left: 0;
+    padding-left: 0;
+
+    &:not(:first-child) {
+      margin-top: 2.75rem;
+    }
+  }
+
+  .panel-heading {
+    margin: 0 0 0.4rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--heading-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--heading-color);
+  }
+
+  ul.panel-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      padding: 0.28rem 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    a {
+      flex: 0 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--text-color);
+      border-bottom: 0;
+
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+
+  .panel-leader {
+    flex: 1 1 0.75rem;
+    min-width: 0.5rem;
+    border-bottom: 1px dotted var(--text-muted-color);
+    opacity: 0.5;
+    transform: translateY(-0.28rem);
+  }
+
+  .panel-meta {
+    flex: 0 0 auto;
+    font-size: 0.76rem;
+    color: var(--text-muted-color);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .panel-more {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--text-muted-color);
+    border-bottom: 0;
+
+    &:hover {
+      color: var(--link-color);
+    }
+  }
+}

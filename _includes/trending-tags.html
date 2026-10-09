@@ -1,6 +1,6 @@
 <!-- The trending tags list -->
 
-{% assign MAX = 10 %}
+{% assign MAX = 8 %}
 
 {% assign size_list = '' | split: '' %}
 {% assign tag_list = '' | split: '' %}
@@ -34,13 +34,18 @@
 {% endfor %}
 
 {% if trending_tags.size > 0 %}
-  <section>
-    <h2 class="panel-heading">{{- site.data.locales[include.lang].panel.trending_tags -}}</h2>
-    <div class="d-flex flex-wrap mt-3 mb-1 me-3">
+  <section id="access-tags">
+    <h2 class="panel-heading">많이 쓴 태그</h2>
+    <ul class="panel-list">
       {% for tag_name in trending_tags %}
         {% assign url = tag_name | slugify | url_encode | prepend: '/tags/' | append: '/' %}
-        <a class="post-tag btn btn-outline-primary" href="{{ url | relative_url }}">{{ tag_name }}</a>
+        <li>
+          <a href="{{ url | relative_url }}">{{ tag_name }}</a>
+          <span class="panel-leader" aria-hidden="true"></span>
+          <span class="panel-meta">{{ site.tags[tag_name].size }}</span>
+        </li>
       {% endfor %}
-    </div>
+    </ul>
+    <a class="panel-more" href="{{ '/tags/' | relative_url }}">전체 태그</a>
   </section>
 {% endif %}
