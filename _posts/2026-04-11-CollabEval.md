@@ -3,7 +3,7 @@ title: "CollabEval: Enhancing LLM-as-a-Judge via Multi-Agent Collaboration"
 author: seokgi
 date: 2026-04-11
 categories: [Paper]
-tags: [LLM, LLM-as-a-Judge, evaluation]
+tags: [LLM-as-a-judge, multi-agent]
 pin: true
 math: true
 ---

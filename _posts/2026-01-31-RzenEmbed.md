@@ -3,7 +3,7 @@ title: "RzenEmbed: Towards Comprehensive Multimodal Retrieval"
 author: seokgi
 date: 2026-01-31
 categories: [Paper]
-tags: [MLLM, representation learning, text-text retrieval, text-image retrieval]
+tags: [multimodal retrieval, MLLM, hard negative]
 pin: true
 math: true
 ---

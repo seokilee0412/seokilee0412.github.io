@@ -3,7 +3,7 @@ title: "Beyond Matryoshka: Revisiting Sparse Coding for Adaptive Representation"
 author: seokgi
 date: 2025-12-07
 categories: [Paper]
-tags: [MLLM, representation learning , Matryoshka representaion learning, text-text retrieval, text-image retrieval]
+tags: [text retrieval, multimodal retrieval, Matryoshka representation, embedding compression]
 pin: true
 math: true
 ---

@@ -3,7 +3,7 @@ title: "Randomly Removing 50% of Dimensions in Text Embeddings has Minimal Impac
 author: seokgi
 date: 2025-10-22
 categories: [Paper]
-tags: [LLM, retrieval]
+tags: [text retrieval, embedding compression, model analysis]
 pin: true
 math: true
 ---

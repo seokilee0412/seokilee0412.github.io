@@ -3,7 +3,7 @@ title: "Quantifying Uncertainty in Answers from Any Language Model and Enhancing
 author: seokgi
 date: 2025-08-24
 categories: [Paper]
-tags: [LLM, haullcination]
+tags: [hallucination, uncertainty estimation]
 pin: true
 math: true
 ---

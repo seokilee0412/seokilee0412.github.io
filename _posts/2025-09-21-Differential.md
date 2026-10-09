@@ -3,7 +3,7 @@ title: "Differential-informed Sample Selection Accelerates Multimodal Contrastiv
 author: seokgi
 date: 2025-09-21
 categories: [Paper]
-tags: [LLM, text-image retrieval]
+tags: [multimodal retrieval, CLIP, contrastive learning, data curation]
 pin: true
 math: true
 ---

@@ -3,7 +3,7 @@ title: "Analyzing the Effects of Supervised Fine-Tuning on Model Knowledge from 
 author: seokgi
 date: 2025-10-06
 categories: [Paper]
-tags: [LLM, SFT]
+tags: [SFT, model analysis]
 pin: true
 math: true
 ---

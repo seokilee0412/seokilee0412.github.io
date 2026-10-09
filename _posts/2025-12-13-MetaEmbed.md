@@ -3,7 +3,7 @@ title: "MetaEmbed: Scaling Multimodal Retrieval at Test-Time with Flexible Late 
 author: seokgi
 date: 2025-12-13
 categories: [Paper]
-tags: [MLLM, representation learning , Matryoshka representaion learning, text-text retrieval, text-image retrieval]
+tags: [multimodal retrieval, MLLM, Matryoshka representation, late interaction]
 pin: true
 math: true
 ---

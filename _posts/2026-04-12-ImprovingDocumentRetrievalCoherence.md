@@ -3,7 +3,7 @@ title: "Improving Document Retrieval Coherence for Semantically Equivalent Queri
 author: seokgi
 date: 2026-04-12
 categories: [Paper]
-tags: [LLM, Multi-Query, contrastive learning, loss]
+tags: [text retrieval, contrastive learning]
 pin: true
 math: true
 ---

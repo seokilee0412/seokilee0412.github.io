@@ -3,7 +3,7 @@ title: "Training LLMs to be Better Text Embedders through Bidirectional Reconstr
 author: seokgi
 date: 2025-10-04
 categories: [Paper]
-tags: [LLM, dense retrieval, contrastive learning]
+tags: [text retrieval, LLM embedding, contrastive learning]
 pin: true
 math: true
 ---
