@@ -1,22 +1,56 @@
 ---
 layout: page
-# All the Tags of posts.
+# 모든 태그: _data/tag_groups.yml 의 묶음(과제 · 방법 · 모델 · 도메인)별로, 글이 많은 순서
 ---
 
-<div id="tags" class="d-flex flex-wrap mx-xl-2">
-  {% assign tags = '' | split: '' %}
+{% assign max_n = site.posts | size %}
+{% assign grouped = '' | split: '' %}
+
+<div id="tags-page">
+  <p class="tags-lead">{{ site.tags | size }}개 태그를 과제 · 방법 · 모델 · 도메인으로 나눴습니다. 태그를 누르면 해당 글 목록으로 이동합니다.</p>
+
+  {% for g in site.data.tag_groups %}
+    <section class="tag-group">
+      <h2 class="tag-group-head">
+        <span class="tag-group-name">{{ g.name }}</span>
+        {% if g.desc %}<span class="tag-group-desc">{{ g.desc }}</span>{% endif %}
+      </h2>
+      <ul class="tag-list">
+        {% for i in (1..max_n) %}
+          {% assign n = max_n | minus: i | plus: 1 %}
+          {% for t in g.tags %}
+            {% if site.tags[t] and site.tags[t].size == n %}
+              {% assign grouped = grouped | push: t %}
+              <li>
+                <a href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">{{ t }}</a>
+                <span class="tag-leader" aria-hidden="true"></span>
+                <span class="tag-count">{{ n }}</span>
+              </li>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+
+  <!-- 묶음에 없는 태그 -->
+  {% assign rest = '' | split: '' %}
   {% for t in site.tags %}
-    {% assign tags = tags | push: t[0] %}
+    {% unless grouped contains t[0] %}{% assign rest = rest | push: t[0] %}{% endunless %}
   {% endfor %}
-
-  {% assign sorted_tags = tags | sort_natural %}
-
-  {% for t in sorted_tags %}
-    <div>
-      <a class="tag" href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
-        {{ t -}}
-        <span class="text-muted">{{ site.tags[t].size }}</span>
-      </a>
-    </div>
-  {% endfor %}
+  {% if rest.size > 0 %}
+    {% assign rest = rest | sort_natural %}
+    <section class="tag-group">
+      <h2 class="tag-group-head"><span class="tag-group-name">기타</span></h2>
+      <ul class="tag-list">
+        {% for t in rest %}
+          <li>
+            <a href="{{ t | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">{{ t }}</a>
+            <span class="tag-leader" aria-hidden="true"></span>
+            <span class="tag-count">{{ site.tags[t].size }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
 </div>

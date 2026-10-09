@@ -1,0 +1,53 @@
+# TAGS 페이지 묶음
+#
+# 태그를 네 가지 축으로 묶어 보여줍니다. 각 묶음 안에서는 글이 많은 순서로 정렬됩니다.
+# 여기 없는 태그는 페이지 맨 아래 "기타"에 자동으로 나타납니다.
+# 새 태그를 만들면 알맞은 묶음의 tags 목록에 추가해 주세요.
+
+- name: 과제
+  desc: 무엇을 풀려는 논문인지
+  tags:
+    - text retrieval
+    - multimodal retrieval
+    - RAG
+    - tool use
+    - tool retrieval
+    - hallucination
+    - LLM-as-a-judge
+    - guardrail
+    - benchmark
+
+- name: 방법
+  desc: 어떻게 풀었는지
+  tags:
+    - hard negative
+    - synthetic data
+    - contrastive learning
+    - SFT
+    - PEFT
+    - LoRA
+    - distillation
+    - preference optimization
+    - data curation
+    - chain-of-thought
+    - Matryoshka representation
+    - embedding compression
+    - late interaction
+    - multi-agent
+    - knowledge graph
+    - uncertainty estimation
+    - model analysis
+    - continual pretraining
+    - MoE
+
+- name: 모델
+  desc: 어떤 종류의 모델을 다루는지
+  tags:
+    - MLLM
+    - CLIP
+    - LLM embedding
+
+- name: 도메인 · 언어
+  tags:
+    - finance
+    - multilingual

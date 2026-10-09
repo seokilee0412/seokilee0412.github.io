@@ -1,23 +1,27 @@
 ---
 layout: page
-# The layout for Tag page
+# 태그 하나의 글 목록 (TOPICS 목차와 같은 형식)
 ---
 
 {% include lang.html %}
 
 <div id="page-tag">
-  <h1 class="ps-lg-2">
-    <i class="fa fa-tag fa-fw text-muted"></i>
+  <h1 class="tag-title">
     {{ page.title }}
-    <span class="lead text-muted ps-2">{{ page.posts | size }}</span>
+    <span class="tag-title-count">{{ page.posts | size }}편</span>
   </h1>
-  <ul class="content ps-0">
+  <ul class="tag-post-list">
     {% for post in page.posts %}
-      <li class="d-flex justify-content-between px-md-3">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <span class="dash flex-grow-1"></span>
-        {% include datetime.html date=post.date class='text-muted small text-nowrap' lang=lang %}
+      {% include topic-of.html post=post %}
+      <li>
+        <a href="{{ post.url | relative_url }}" title="{{ post.title | escape }}">
+          {{- post.title | split: ':' | first | strip -}}
+        </a>
+        <span class="tag-leader" aria-hidden="true"></span>
+        {% if topic %}<span class="tag-post-topic">{{ topic.name }}</span>{% endif %}
+        <time class="tag-post-date">{{ post.date | date: '%y.%m.%d' }}</time>
       </li>
     {% endfor %}
   </ul>
+  <p class="tag-back"><a href="{{ '/tags/' | relative_url }}">전체 태그 보기</a></p>
 </div>

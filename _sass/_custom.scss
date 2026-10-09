@@ -568,3 +568,169 @@ main #topics-page {
     font-variant-numeric: tabular-nums;
   }
 }
+
+/* ========================================================
+ * 5. TAGS 탭 · 태그별 글 목록
+ * ====================================================== */
+
+main #tags-page {
+  word-break: keep-all;
+
+  .tags-lead {
+    color: var(--text-muted-color);
+    font-size: 0.95rem;
+    margin: -1rem 0 2.25rem;
+  }
+
+  .tag-group {
+    margin-bottom: 2.5rem;
+  }
+
+  .tag-group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--heading-color);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--heading-color);
+  }
+
+  .tag-group-desc {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--text-muted-color);
+  }
+
+  ul.tag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 2.5rem;
+
+    @include bp.lt(bp.get(md)) {
+      columns: 1;
+    }
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 0;
+      padding: 0.3rem 0;
+      break-inside: avoid;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+    a {
+      flex: 0 1 auto;
+      color: var(--text-color);
+      border-bottom: 0;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+}
+
+.tag-leader {
+  flex: 1 1 1.5rem;
+  min-width: 1rem;
+  border-bottom: 1px dotted var(--text-muted-color);
+  opacity: 0.6;
+  transform: translateY(-0.3rem);
+}
+
+.tag-count {
+  flex: 0 0 auto;
+  min-width: 1.25rem;
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-muted-color);
+  font-variant-numeric: tabular-nums;
+}
+
+main #page-tag {
+  word-break: keep-all;
+
+  .tag-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .tag-title-count {
+    font-size: 1rem;
+    color: var(--text-muted-color);
+  }
+
+  ul.tag-post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid var(--heading-color);
+
+    > li {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin: 0;
+      padding: 0.55rem 0;
+      line-height: 1.5;
+
+      &::before {
+        display: none !important;
+      }
+      border-bottom: 1px solid var(--rule-soft-color);
+      font-size: 0.97rem;
+      line-height: 1.5;
+    }
+
+    a {
+      flex: 0 1 auto;
+      min-width: 0;
+      color: var(--text-color);
+      border-bottom: 0;
+      text-decoration: none;
+
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+
+  .tag-post-topic,
+  .tag-post-date {
+    flex: 0 0 auto;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tag-post-topic {
+    @include bp.lt(bp.get(md)) {
+      display: none;
+    }
+  }
+
+  .tag-back {
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+
+    a {
+      color: var(--text-muted-color);
+      border-bottom: 0;
+
+      &:hover {
+        color: var(--link-color);
+      }
+    }
+  }
+}
