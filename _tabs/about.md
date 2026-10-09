@@ -19,7 +19,7 @@ order: 4
   </dl>
 
   <h2 class="about-head">이 블로그에서는</h2>
-  <p class="about-text">2025년 8월부터 시간 날때마다 틈틈히 논문 리뷰를 진행하고 있습니다.</p>
+  <p class="about-text">2025년 8월부터 시간 날 때마다 틈틈이 논문 리뷰를 진행하고 있습니다.</p>
 
   <ul class="about-topics">
     {% for t in site.data.topics %}
