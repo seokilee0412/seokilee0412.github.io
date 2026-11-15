@@ -70,7 +70,7 @@ $$x_i^R = \log p_{M_R}(o_i^+ \mid u_i) - \log p_{M_R}(o_i^- \mid u_i)$$
 | `Qwen3-4B` | 34,039 | 27,632 | 81.2% | 1,000 |
 | `Qwen3-8B` | 34,039 | 28,489 | 83.7% | 1,000 |
 
-- 비율 열은 Table 2의 수치로 직접 계산한 값임.
+- 비율 열은 논문 수치로 직접 계산한 값임.
 
 #### C. 두 가지 passage 대조
 
@@ -86,7 +86,7 @@ $$y_i^{\text{obj},R} = \tilde{s}_R(q_i, c_i^+) - \tilde{s}_R(q_i, c_i^-)$$
 $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 
 - $\tilde{s}_R$은 모델·설정별로 z-score 정규화한 retrieval 점수임. pair의 두 점수에 같은 affine 변환을 적용하므로 pair 내 선호는 바뀌지 않음.
-- Conflict 설정의 대체 relation은 사람이 고른 template임 (Table 4). 예: country of citizenship → "was born in", "died in", "used to work in", "maintains diplomatic relations with".
+- Conflict 설정의 대체 relation은 사람이 고른 template임. 예: country of citizenship → "was born in", "died in", "used to work in", "maintains diplomatic relations with".
 - 보고 지표: 1,000개 전체의 Pearson $r(x, y)$, 선호율, 하위 5개 decile (Bottom)과 상위 5개 decile (Top)의 선호율.
 
 #### D. 보조 분석
@@ -100,7 +100,7 @@ $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 
 ### 3. 실험
 
-#### A. 주요 결과 (Table 1, Table 3)
+#### A. 주요 결과
 
 ![image2.png](https://seokilee0412.github.io/assets/img/SearchByAnswerBias/image2.png)
 
@@ -120,9 +120,9 @@ $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 1. **8개 retriever 모두 양의 상관을 보임:** object-contrast $r$ = 0.21–0.52, conflict $r$ = 0.13–0.30.
 2. **Object만 다를 때 모든 모델이 50%를 넘음:** relation과 문장 형태가 같으므로 object identity만으로 점수가 달라진 것임. `E5-large`와 `Qwen3` 계열은 90% 이상임.
 3. **틀린 relation이 이기기도 함:** `Qwen3-8B`는 65.0%의 경우 "died in India"를 "has citizenship in Bulgaria"보다 위에 둠. 모든 모델에서 Top 선호율이 Bottom보다 높음.
-4. **Decile이 올라갈수록 점수 차 분포가 위로 이동함** (Figure 2, Appendix D).
+4. **Decile이 올라갈수록 점수 차 분포가 위로 이동함**.
 
-#### B. Relation 단위 견고성 (Table 5)
+#### B. Relation 단위 견고성
 
 - 예시 30개 이상인 relation–model 쌍 중 양의 상관은 object-contrast **84/91**, conflict **75/91** 임.
 - Relation 내 median 상관은 object-contrast에서 8개 모두, conflict에서 7/8이 양수임.
@@ -135,7 +135,7 @@ $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 | native language | wrote in, worked in | 0.9% | 0.1% | 88.1% |
 | diplomatic relations | shares border with | 1.1% | 0.0% | 0.0% |
 
-#### C. 사전학습 기원과 모델 크기 (Table 6, Figure 7)
+#### C. 사전학습 기원과 모델 크기
 
 ![image4.png](https://seokilee0412.github.io/assets/img/SearchByAnswerBias/image4.png)
 
@@ -153,13 +153,13 @@ $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 1. **Retrieval 학습 전 backbone으로 계산해도 상관이 모두 양수임:** 편향이 사전학습된 지식에서 온다는 해석을 뒷받침함.
 2. **공통 200개 예시에서도 경향이 유지됨:** `E5-small` (~33M)은 거의 0이고, `Qwen3-4B`가 object-contrast 약 0.54, conflict 약 0.39로 가장 높음. 저자는 backbone이 커질수록 편향이 강해질 것으로 예상함.
 
-#### D. QAMPARI: 정답이 여럿인 실제 질문 (Figure 8, 9)
+#### D. QAMPARI: 정답이 여럿인 실제 질문
 
 ![image5.png](https://seokilee0412.github.io/assets/img/SearchByAnswerBias/image5.png)
 
 ![image6.png](https://seokilee0412.github.io/assets/img/SearchByAnswerBias/image6.png)
 
-- 모든 retriever에서 known answer가 unknown answer보다 상위에 검색됨. 아래는 Figure 9를 판독한 근사값임 (top-100 밖은 101위로 계산).
+- 모든 retriever에서 known answer가 unknown answer보다 상위에 검색됨. 아래는 그래프를 판독한 근사값임 (top-100 밖은 101위로 계산).
 
 | 모델 | Known 평균 순위 | Unknown 평균 순위 | 차이 |
 |---|---|---|---|
@@ -178,7 +178,7 @@ $$y_i^{\text{rel},R} = \tilde{s}_R(q_i, c_i^o) - \tilde{s}_R(q_i, c_i^r)$$
 - 이 편향은 object만 다른 경우뿐 아니라 relation이 틀린 passage에서도 나타나고, retrieval 학습 전 backbone에서도 같은 방향의 상관이 관찰됨.
 - 정답이 여럿이거나 사실이 바뀌는 상황, 폐쇄 도메인에서 retrieval이 corpus 근거 대신 parametric knowledge 쪽으로 끌려갈 수 있다는 경고임. 완화 방법은 제안하지 않음.
 
-**한계** ($x<0$ 비율은 Table 2로 계산한 값이고, QAMPARI 수치는 그림 판독값임)
+**한계**
 
 - **"편향"과 "참 문장 선호"가 분리되지 않음:** object-contrast의 $c^-$ ("Mukul Roy has citizenship in Bulgaria")는 대부분 거짓 문장이라, $c^+$를 고르는 것은 QA retriever의 정상 동작이기도 함. 이를 가를 수 있는 것은 모델이 틀린 답을 더 믿는 $x<0$ 예시 (`Contriever` 41%, `E5-large` 28%, 나머지 16–22%)인데 분석에서 제외했음. 여기서 retriever가 틀린 쪽 passage를 고른다면 **모델의 믿음을 따라 검색한다** 는 가장 직접적인 증거가 되었을 것임. $x>0$ 선택과 정렬은 흔한 object가 위로 오게 만들어 entity 인기도와도 혼동됨.
 - **실제 데이터 결과가 통제 실험과 반대 방향임:** QAMPARI에서 통제 실험 선호율이 가장 높았던 `E5-large`, `Qwen3`의 known–unknown 평균 순위 차이는 약 4–8로 가장 작고, `DPR`·`Spider` 계열은 약 21–36으로 큼. "backbone이 클수록 편향이 강해진다"는 주장과 맞지 않음. known answer는 corpus에 근거 passage 자체가 많을 수 있는데 이를 통제하지 않았고, 개입 실험 없이 상관만 보여 실제 RAG 성능에 미치는 영향도 알 수 없음.
